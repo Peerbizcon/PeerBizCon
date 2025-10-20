@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerBizCon - Connect, Learn, Grow</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#1e3a8a', // Deep Indigo
+                        'accent-green': '#10b981', // Emerald Green for CTAs
+                        'light-gray': '#f3f4f6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo/Site Name -->
+            <a href="#home" class="text-2xl font-extrabold text-primary-blue tracking-tight">
+                Peer<span class="text-accent-green">Biz</span>Con
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-primary-blue transition duration-150 font-medium">About</a>
+                <a href="#services" class="text-gray-600 hover:text-primary-blue transition duration-150 font-medium">Pillars</a>
+                <a href="#contact" class="text-gray-600 hover:text-primary-blue transition duration-150 font-medium">Contact</a>
+                <a href="#" class="bg-accent-green text-white px-4 py-1.5 rounded-full shadow-md hover:bg-green-600 transition duration-300 transform hover:scale-105 font-medium">
+                    Register
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button (Hamburger Icon) -->
+            <button id="mobile-menu-button" class="md:hidden text-primary-blue p-2 rounded-lg hover:bg-light-gray transition duration-150">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-light-gray border-t border-gray-200">
+            <nav class="flex flex-col px-4 py-2 space-y-2">
+                <a href="#about" class="block py-2 text-gray-700 hover:bg-gray-200 rounded-lg">About</a>
+                <a href="#services" class="block py-2 text-gray-700 hover:bg-gray-200 rounded-lg">Pillars</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:bg-gray-200 rounded-lg">Contact</a>
+                <a href="#" class="block text-center mt-2 bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition duration-300">
+                    Register Now
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-light-gray pt-20 pb-28">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
+            <!-- Left Content -->
+            <div class="lg:w-1/2 mb-10 lg:mb-0">
+                <span class="text-accent-green text-sm font-semibold uppercase tracking-wider mb-3 block">Elevate Your Enterprise</span>
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
+                    Connect, Collaborate, <span class="text-primary-blue">Conquer the Market.</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                    PeerBizCon is the premier event for business owners seeking practical insights, meaningful peer-to-peer connections, and actionable strategies for sustainable growth.
+                </p>
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+                    <a href="#" class="bg-accent-green text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-green-600 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                        Get Your Pass
+                    </a>
+                    <a href="#contact" class="bg-white text-primary-blue border border-primary-blue px-8 py-3 rounded-xl font-bold shadow-md hover:bg-primary-blue hover:text-white transition duration-300 flex items-center justify-center">
+                        Learn More
+                    </a>
+                    <!-- GEMINI INTEGRATION 1 BUTTON: Brainstorm Taglines -->
+                    <button onclick="generateTaglines()" id="tagline-button" class="bg-primary-blue text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-blue-800 transition duration-300 transform hover:scale-105 flex items-center justify-center whitespace-nowrap">
+                        <span id="tagline-text">✨ Brainstorm Taglines</span>
+                        <span id="tagline-loading" class="hidden animate-spin h-5 w-5 ml-2 border-2 border-t-2 border-white rounded-full"></span>
+                    </button>
+                </div>
+                <!-- GEMINI INTEGRATION 1 RESULTS -->
+                <div id="tagline-results" class="mt-4 p-4 bg-primary-blue/10 rounded-xl hidden text-left max-w-lg">
+                    <p class="font-bold text-primary-blue mb-2">Suggested Taglines:</p>
+                    <ul id="tagline-list" class="list-disc list-inside text-gray-700 space-y-1 text-sm"></ul>
+                </div>
+            </div>
+
+            <!-- Right Image Placeholder -->
+            <div class="lg:w-1/2 w-full flex justify-center">
+                <!-- Placeholder for a sleek, modern visual or illustration -->
+                <div class="w-full max-w-md h-80 bg-gray-200 rounded-3xl shadow-2xl flex items-center justify-center border-4 border-white">
+                    <span class="text-gray-500 text-xl font-semibold">Business Graph Placeholder</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">What is PeerBizCon?</h2>
+            <p class="text-lg text-gray-600 mb-12">
+                More than just a conference, PeerBizCon is a collaborative experience designed exclusively for founders and executives. Our focus is on practical, real-world solutions derived from shared peer wisdom and expert-led workshops. We cut through the noise to deliver clarity and connection.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Value Prop 1 -->
+                <div class="p-6 bg-light-gray rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-primary-blue mb-3">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20v-2c0-.214-.012-.426-.035-.637l-.872-4.364a4 4 0 00-7.85 0l-.872 4.364A3 3 0 002 18v2h5m-1 0v-2a3 3 0 00-3-3H3m14 3h-2M4 20h2m1-2v-2c0-.214.012-.426.035-.637l.872-4.364a4 4 0 017.85 0l.872 4.364c.023.211.035.423.035.637v2m-1 0h-2M10 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Curated Networking</h3>
+                    <p class="text-gray-600 text-sm">Meet high-caliber peers in small, focused groups for genuine connection and mentorship.</p>
+                </div>
+                <!-- Value Prop 2 -->
+                <div class="p-6 bg-light-gray rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-primary-blue mb-3">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6a2 2 0 00-2-2H5a2 2 0 00-2 2v13m7 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2m7 7h2v-2a3 3 0 00-3-3h-2m-8 0H5a3 3 0 00-3 3v2h2m0 0h2v-2a3 3 0 00-3-3"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Actionable Workshops</h3>
+                    <p class="text-gray-600 text-sm">Leave with templates and strategies, not just theory. Focused on execution and measurable results.</p>
+                </div>
+                <!-- Value Prop 3 -->
+                <div class="p-6 bg-light-gray rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-primary-blue mb-3">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Expert-Led Insights</h3>
+                    <p class="text-gray-600 text-sm">Hear from proven industry leaders who are actively succeeding in today's dynamic global market.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services/Pillars Section -->
+    <section id="services" class="py-24 bg-primary-blue">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Our Core Pillars</h2>
+            <p class="text-lg text-blue-200 mb-16 max-w-3xl mx-auto">
+                The PeerBizCon experience is built on three foundational areas designed to optimize your business performance and personal leadership.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Pillar 1: Visionary Leadership -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-left">
+                    <div class="text-accent-green mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15.75c-2.31 0-4.6-.333-6.87-.995M3 12h18M5.8 5.8a8 8 0 1112.4 0"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Visionary Leadership</h3>
+                    <p class="text-gray-600 mb-4" data-pillar-desc="Deep dives into modern leadership paradigms, team building, and mastering corporate culture.">Deep dives into modern leadership paradigms, team building, and mastering corporate culture.</p>
+                    
+                    <!-- GEMINI INTEGRATION 2 BUTTON -->
+                    <button onclick="suggestSessions('Visionary Leadership', this)" class="w-full bg-accent-green/20 text-accent-green text-sm px-4 py-2 rounded-lg font-semibold hover:bg-accent-green/30 transition duration-300 flex items-center justify-center">
+                        ✨ Suggest Sessions
+                    </button>
+                    <!-- GEMINI INTEGRATION 2 RESULTS -->
+                    <div id="results-VisionaryLeadership" class="mt-3 p-3 bg-accent-green/10 rounded-lg hidden text-left">
+                        <p class="font-bold text-accent-green mb-1 text-sm">Session Ideas:</p>
+                        <ul class="session-list list-disc list-inside text-gray-700 text-sm"></ul>
+                        <div class="loading-spinner hidden animate-spin h-5 w-5 mx-auto mt-2 border-2 border-t-2 border-accent-green rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Sustainable Financials -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-left">
+                    <div class="text-accent-green mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V3m0 9v9"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Sustainable Financials</h3>
+                    <p class="text-gray-600 mb-4" data-pillar-desc="Strategies for profitable scaling, cash flow optimization, and securing future investment.">Strategies for profitable scaling, cash flow optimization, and securing future investment.</p>
+                    
+                    <!-- GEMINI INTEGRATION 2 BUTTON -->
+                    <button onclick="suggestSessions('Sustainable Financials', this)" class="w-full bg-accent-green/20 text-accent-green text-sm px-4 py-2 rounded-lg font-semibold hover:bg-accent-green/30 transition duration-300 flex items-center justify-center">
+                        ✨ Suggest Sessions
+                    </button>
+                    <!-- GEMINI INTEGRATION 2 RESULTS -->
+                    <div id="results-SustainableFinancials" class="mt-3 p-3 bg-accent-green/10 rounded-lg hidden text-left">
+                        <p class="font-bold text-accent-green mb-1 text-sm">Session Ideas:</p>
+                        <ul class="session-list list-disc list-inside text-gray-700 text-sm"></ul>
+                        <div class="loading-spinner hidden animate-spin h-5 w-5 mx-auto mt-2 border-2 border-t-2 border-accent-green rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Tech & Market Innovation -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl text-left">
+                    <div class="text-accent-green mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-4-4 4-4v-.75m0 0a1 1 0 011-1h4a1 1 0 011 1v4.5M3 15h21"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Tech & Market Innovation</h3>
+                    <p class="text-gray-600 mb-4" data-pillar-desc="Integrating cutting-edge technology and anticipating market shifts to maintain competitive advantage.">Integrating cutting-edge technology and anticipating market shifts to maintain competitive advantage.</p>
+                    
+                    <!-- GEMINI INTEGRATION 2 BUTTON -->
+                    <button onclick="suggestSessions('Tech & Market Innovation', this)" class="w-full bg-accent-green/20 text-accent-green text-sm px-4 py-2 rounded-lg font-semibold hover:bg-accent-green/30 transition duration-300 flex items-center justify-center">
+                        ✨ Suggest Sessions
+                    </button>
+                    <!-- GEMINI INTEGRATION 2 RESULTS -->
+                    <div id="results-TechMarketInnovation" class="mt-3 p-3 bg-accent-green/10 rounded-lg hidden text-left">
+                        <p class="font-bold text-accent-green mb-1 text-sm">Session Ideas:</p>
+                        <ul class="session-list list-disc list-inside text-gray-700 text-sm"></ul>
+                        <div class="loading-spinner hidden animate-spin h-5 w-5 mx-auto mt-2 border-2 border-t-2 border-accent-green rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-light-gray">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ready to Accelerate Your Business?</h2>
+            <p class="text-xl text-gray-600 mb-8">
+                Spaces are limited. Secure your spot at the next PeerBizCon event.
+            </p>
+            <a href="#" class="inline-block bg-accent-green text-white px-10 py-4 rounded-full text-lg font-bold shadow-2xl hover:bg-green-600 transition duration-300 transform hover:scale-105">
+                Reserve My Seat Today!
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section (Mock Form) -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+            <h2 class="text-4xl font-bold text-primary-blue text-center mb-10">Get In Touch</h2>
+            <div class="bg-light-gray p-8 rounded-2xl shadow-xl">
+                <p class="text-gray-600 text-center mb-6">Have questions about the event or partnership opportunities? We'd love to hear from you.</p>
+                
+                <form onsubmit="event.preventDefault(); showMessage();" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" name="name" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-blue focus:border-primary-blue">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" name="email" required
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-blue focus:border-primary-blue">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Your Message</label>
+                        <textarea id="message" name="message" rows="4" required
+                                  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-blue focus:border-primary-blue"></textarea>
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-primary-blue text-white px-4 py-3 rounded-xl font-bold hover:bg-blue-800 transition duration-300 transform hover:scale-[1.01] shadow-lg">
+                        Send Message
+                    </button>
+                </form>
+
+                <!-- Custom Message Box for form submission -->
+                <div id="message-box" class="hidden mt-6 p-4 text-sm font-semibold bg-accent-green text-white rounded-lg text-center" role="alert">
+                    Thank you for your message! We will get back to you shortly.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Col 1: Logo & Mission -->
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-2xl font-extrabold text-accent-green mb-4">PeerBizCon</h3>
+                <p class="text-sm text-gray-400">Driving business success through peer knowledge and actionable strategies.</p>
+            </div>
+
+            <!-- Col 2: Quick Links -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#about" class="hover:text-accent-green transition duration-150">About Us</a></li>
+                    <li><a href="#services" class="hover:text-accent-green transition duration-150">Event Pillars</a></li>
+                    <li><a href="#" class="hover:text-accent-green transition duration-150">Register</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Contact Info -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>Email: info@peerbizcon.org</li>
+                    <li>Phone: (555) 123-4567</li>
+                    <li>Location: Global Virtual & Major Cities</li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Social Media -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Connect</h4>
+                <div class="flex space-x-4">
+                    <!-- Mock Social Icons -->
+                    <a href="#" class="text-gray-400 hover:text-accent-green transition duration-150">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.63,5.81C17.91,5.15,16.03,4.71,14,4.5v1.94c.9,0,1.75.13,2.54.38a8.03,8.03,0,0,1,1.83.9,7.63,7.63,0,0,1,.9.61c.45.34.84.7,1.15,1.1l1.52-1.31C20.67,6.91,20.21,6.33,19.63,5.81Z"></path><path d="M14,14.5c.34.02.68.03,1.02.04v2.05c-.34.01-.68.02-1.02.03V14.5Z"></path><path d="M21,12a9,9,0,1,0-9,9,9,9,0,0,0,9-9ZM7.4,14.65l-1.31,1.52c-.52-.58-1.01-1.25-1.42-2L5.8,14.15a7.71,7.71,0,0,1,1.6,2.37.5.5,0,0,0,.68.14,7.86,7.86,0,0,1,2.02-1.89l-2.7-1.4Z"></path><path d="M16.3,16.9l-1.4,2.7c.36.19.74.36,1.12.51l.8-.57C16.53,18.73,16.69,17.82,16.3,16.9Z"></path></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent-green transition duration-150">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.46,6c-0.81,0.36-1.68,0.6-2.58,0.71,0.94-0.56,1.65-1.44,1.99-2.51-0.88,0.52-1.87,0.89-2.92,1.1c-0.83-0.88-2.01-1.43-3.32-1.43-2.51,0-4.55,2.04-4.55,4.55,0,0.36,0.04,0.72,0.1,1.06C7.72,10.6,4.09,8.71,1.68,5.77c-0.37,0.63-0.58,1.35-0.58,2.13,0,1.57,0.8,2.96,2.03,3.77-0.74-0.02-1.44-0.23-2.05-0.56,0,0.02,0,0.04,0,0.06,0,2.21,1.57,4.04,3.64,4.46-0.38,0.11-0.78,0.17-1.19,0.17-0.29,0-0.57-0.03-0.85-0.08,0.58,1.81,2.27,3.13,4.28,3.17-1.56,1.22-3.53,1.95-5.69,1.95-0.37,0-0.74-0.02-1.1-0.06,2.02,1.29,4.42,2.04,6.97,2.04,8.35,0,12.92-6.91,12.92-12.92,0-0.19-0.01-0.38-0.01-0.57,0.88-0.63,1.64-1.42,2.24-2.31z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent-green transition duration-150">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 2.062a.49.49 0 00-.416-.013c-1.397.458-2.73 1.144-3.996 2.057-2.716 1.957-5.32 3.993-7.79 6.22-1.685 1.547-3.238 3.197-4.664 4.908l-1.34-1.34c.05-.05.125-.125.176-.176l.162-.162c.797-.8.797-2.09-.001-2.89s-2.09-.797-2.89 0l-1.25 1.25a.488.488 0 00-.012.417c.459 1.397 1.145 2.73 2.058 3.996 1.957 2.716 3.993 5.32 6.22 7.79 1.547 1.685 3.197 3.238 4.908 4.664l1.34 1.34c.05.05.125.125.176.176l.162-.162c.8.797 2.09.797 2.89-.001s.797-2.09 0-2.89l-1.25-1.25a.488.488 0 00-.417-.012c-1.397.459-2.73 1.145-3.996 2.058-2.716 1.957-5.32 3.993-7.79 6.22-1.685 1.547-3.238 3.197-4.908 4.664l-1.34 1.34c-.05.05-.125.125-.176.176l-.162-.162c-.797-.8-.797-2.09 0-2.89s2.09-.797 2.89 0l1.25 1.25a.488.488 0 00.417.012c1.397-.459 2.73-1.145 3.996-2.058 2.716-1.957 5.32-3.993 7.79-6.22 1.547-1.685 3.197-3.238 4.664-4.908l1.34-1.34c.05-.05.125-.125.176-.176l.162-.162c.8-.797.797-2.09.001-2.89s-2.09-.797-2.89 0l-1.25 1.25z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center border-t border-gray-700 pt-6">
+            <p class="text-sm text-gray-500">&copy; 2025 PeerBizCon. All rights reserved. | Built with purpose.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle and form message
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const messageBox = document.getElementById('message-box');
+
+            // --- GEMINI API INTEGRATIONS SETUP ---
+            const apiKey = ""; // API Key is provided by the canvas environment
+            const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
+
+            /**
+             * Utility to handle API fetch with a simple retry mechanism (exponential backoff).
+             */
+            async function apiFetchWithRetry(payload, maxRetries = 3) {
+                const headers = { 'Content-Type': 'application/json' };
+
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify(payload)
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                            if (text) return text;
+                            throw new Error("API response was valid but contained no text.");
+                        } else {
+                            // Throw error to trigger retry or final catch block
+                            throw new Error(`API error: ${response.status} - ${result.error?.message || response.statusText}`);
+                        }
+                    } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error.message);
+                        if (i === maxRetries - 1) throw new Error("All API attempts failed.");
+                        // Exponential backoff delay
+                        await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                    }
+                }
+                // Should not be reached, but necessary for function completeness
+                throw new Error("Max retries reached.");
+            }
+
+            /**
+             * Feature 1: Generates alternative taglines for the conference.
+             */
+            window.generateTaglines = async function() {
+                const button = document.getElementById('tagline-button');
+                const buttonText = document.getElementById('tagline-text');
+                const loadingSpinner = document.getElementById('tagline-loading');
+                const resultsContainer = document.getElementById('tagline-results');
+                const resultsList = document.getElementById('tagline-list');
+                
+                // Show loading state
+                buttonText.textContent = 'Brainstorming...';
+                loadingSpinner.classList.remove('hidden');
+                button.disabled = true;
+                resultsContainer.classList.add('hidden');
+                resultsList.innerHTML = '';
+                
+                const systemPrompt = "You are a creative marketing expert. Generate 3 unique, compelling, and professional taglines for a business conference called 'PeerBizCon'. Each tagline must be concise and actionable, focusing on peer collaboration and growth. Output only the 3 taglines, separated by newlines, with no additional formatting or introductory text.";
+                
+                const userQuery = "Conference Name: PeerBizCon. Mission: Connect, Collaborate, Conquer the Market. Event is for business owners seeking practical insights, peer-to-peer connections, and actionable strategies for sustainable growth.";
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                try {
+                    const rawText = await apiFetchWithRetry(payload);
+                    
+                    // Process the newline-separated list
+                    const taglines = rawText.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+                    
+                    if (taglines.length > 0) {
+                        taglines.forEach(tagline => {
+                            const li = document.createElement('li');
+                            // Clean up potential markdown list prefixes like '-'
+                            li.textContent = tagline.replace(/^(\*|-)\s*/, ''); 
+                            resultsList.appendChild(li);
+                        });
+                        resultsContainer.classList.remove('hidden');
+                    } else {
+                        resultsList.innerHTML = '<li class="text-red-500">Could not generate valid taglines.</li>';
+                        resultsContainer.classList.remove('hidden');
+                    }
+
+                } catch (error) {
+                    console.error("Tagline generation failed:", error);
+                    resultsList.innerHTML = '<li class="text-red-500">Error: Failed to connect to the brain-trust. Try again.</li>';
+                    resultsContainer.classList.remove('hidden');
+                } finally {
+                    // Reset button state
+                    buttonText.textContent = '✨ Brainstorm Taglines';
+                    loadingSpinner.classList.add('hidden');
+                    button.disabled = false;
+                }
+            }
+
+            /**
+             * Feature 2: Suggests 3 key session titles for a given pillar.
+             */
+            window.suggestSessions = async function(pillarTitle, buttonElement) {
+                const pillarId = pillarTitle.replace(/[^a-zA-Z0-9]/g, ''); // Clean for ID (VisionaryLeadership, SustainableFinancials, etc.)
+                const descriptionElement = buttonElement.previousElementSibling;
+                const pillarDesc = descriptionElement.getAttribute('data-pillar-desc');
+                
+                const resultsDiv = document.getElementById(`results-${pillarId}`);
+                const resultsList = resultsDiv.querySelector('.session-list');
+                const loadingSpinner = resultsDiv.querySelector('.loading-spinner');
+
+                // Show loading state
+                buttonElement.disabled = true;
+                buttonElement.textContent = 'Loading...';
+                resultsDiv.classList.remove('hidden'); // Show container immediately to show spinner
+                loadingSpinner.classList.remove('hidden');
+                resultsList.innerHTML = '';
+
+
+                const systemPrompt = `You are an event planner. Based on the following business pillar and its description, generate 3 highly relevant and engaging session titles (e.g., workshop titles or talk titles) for a conference. The titles must be professional, focused, and compelling. Output only the 3 titles, separated by newlines, with no other text or formatting.`;
+                
+                const userQuery = `Pillar: ${pillarTitle}. Description: ${pillarDesc}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                try {
+                    const rawText = await apiFetchWithRetry(payload);
+                    
+                    // Process the newline-separated list
+                    const sessionTitles = rawText.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+                    
+                    if (sessionTitles.length > 0) {
+                        sessionTitles.forEach(title => {
+                            const li = document.createElement('li');
+                            // Clean up potential markdown list prefixes like '-'
+                            li.textContent = title.replace(/^(\*|-)\s*/, '');
+                            resultsList.appendChild(li);
+                        });
+                    } else {
+                        resultsList.innerHTML = '<li class="text-red-500">Could not generate valid session titles.</li>';
+                    }
+
+                } catch (error) {
+                    console.error(`Session suggestion failed for ${pillarTitle}:`, error);
+                    resultsList.innerHTML = '<li class="text-red-500">Error: Failed to connect to the brain-trust. Try again.</li>';
+                } finally {
+                    // Reset button state
+                    buttonElement.textContent = '✨ Suggest Sessions';
+                    loadingSpinner.classList.add('hidden');
+                    buttonElement.disabled = false;
+                }
+            }
+
+            // 1. Mobile Menu Toggle
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // 2. Hide mobile menu after clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // 3. Simple message box display (instead of alert())
+            window.showMessage = function() {
+                messageBox.classList.remove('hidden');
+                // Hide the message after 5 seconds
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+
+</body>
+</html>
